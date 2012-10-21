@@ -6,9 +6,9 @@
 </head>
 <body>
 <h1>
-	Hello world!  
+	Ereignis  
 </h1>
 
-<P>  The time on the server is ${serverTime}. </P>
+<P>  Bezeichnung ${ereignis}. </P>
 </body>
 </html>
