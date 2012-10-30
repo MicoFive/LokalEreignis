@@ -1,4 +1,7 @@
 @media screen and (max-width: 479px) {
+	img {
+		max-width: 100%;
+	}
 	.ereignis {
 		margin-left: 2em;
 		margin-top: 2em;

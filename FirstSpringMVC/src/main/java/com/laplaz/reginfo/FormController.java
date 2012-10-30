@@ -2,6 +2,8 @@ package com.laplaz.reginfo;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,9 +15,11 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("/form")
+@RequestMapping("/")
 @SessionAttributes("formBean")
 public class FormController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(FormController.class);
 
 	// Invoked on every request
 
@@ -33,7 +37,8 @@ public class FormController {
 	}
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public void form() {
+	public String form() {
+		return "form";
 	}
 
 	@RequestMapping(method=RequestMethod.POST)
@@ -41,8 +46,11 @@ public class FormController {
 								@ModelAttribute("ajaxRequest") boolean ajaxRequest, 
 								Model model, RedirectAttributes redirectAttrs) {
 		if (result.hasErrors()) {
-			return null;
+			return "form";
 		}
+		
+		logger.info("Ereignis angelegt: " + formBean);
+		
 		// Typically you would save to a db and clear the "form" attribute from the session 
 		// via SessionStatus.setCompleted(). For the demo we leave it in the session.
 		String message = "Form submitted successfully.  Bound " + formBean;
@@ -55,7 +63,7 @@ public class FormController {
 			// store a success message for rendering on the next request after redirect
 			// redirect back to the form to render the success message along with newly bound values
 			redirectAttrs.addFlashAttribute("message", message);
-			return "redirect:/form";			
+			return "redirect:/";			
 		}
 	}
 	

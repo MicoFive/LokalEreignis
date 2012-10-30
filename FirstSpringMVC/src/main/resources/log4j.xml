@@ -10,9 +10,20 @@
 		</layout>
 	</appender>
 	
+	<appender name="logfile" class="org.apache.log4j.RollingFileAppender">
+		<param name="file" value="ereignisse.log" />
+		<param name="MaxFileSize" value="100KB" />
+		<!-- Keep one backup file -->
+		<param name="MaxBackupIndex" value="1" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%p %t %c - %m%n" />
+		</layout>
+	</appender>
+	
 	<!-- Application Loggers -->
 	<logger name="com.laplaz.reginfo">
 		<level value="info" />
+		<appender-ref ref="logfile" />
 	</logger>
 	
 	<!-- 3rdparty Loggers -->

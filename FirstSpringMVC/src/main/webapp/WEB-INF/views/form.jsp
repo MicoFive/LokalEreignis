@@ -3,10 +3,13 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ page session="false" %>
 <c:if test="${!ajaxRequest}">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<title>forms | mvc-showcase</title>
-	<link href="<c:url value="/resources/form.css" />" rel="stylesheet"  type="text/css" />		
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Ereignis erfassen</title>
+	<link rel="stylesheet" type="text/css" href="<c:url value="/resources/formate.css" />">
+	<link rel="stylesheet" type="text/css" href="<c:url value="/resources/smartphone.css" />">	
 	<script type="text/javascript" src="<c:url value="/resources/jquery/1.6/jquery.js" />"></script>
 </head>
 <body>
@@ -25,11 +28,22 @@
 		  		</s:bind>
 			</div>
 		  	<fieldset>
-		  		<legend>Personal Info</legend>
-		  		<form:label path="name">
-		  			Name <form:errors path="name" cssClass="error" />
+		  		<legend>Ereignis</legend>
+		  		<form:label path="bezeichnung">
+		  			Bezeichnung <form:errors path="bezeichnung" cssClass="error" />
 		 		</form:label>
-		  		<form:input path="name" />
+		  		<form:input path="bezeichnung" />
+
+		  		<form:label path="zeitpunkt">
+		  			Zeitpunkt <form:errors path="zeitpunkt" cssClass="error" />
+		 		</form:label>
+		  		<form:input path="zeitpunkt" />
+
+		  		<form:label path="treffpunkt">
+		  			Treffpunkt <form:errors path="treffpunkt" cssClass="error" />
+		 		</form:label>
+		  		<form:input path="treffpunkt" />
+
 		  	</fieldset>
 	
 			<p><button type="submit">Submit</button></p>
