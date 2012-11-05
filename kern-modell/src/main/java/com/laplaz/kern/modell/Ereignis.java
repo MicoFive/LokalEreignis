@@ -1,4 +1,5 @@
-package com.laplaz.reginfo.modell;
+package com.laplaz.kern.modell;
+
 
 
 public class Ereignis {

@@ -1,4 +1,4 @@
-package com.laplaz.reginfo.modell;
+package com.laplaz.kern.modell;
 
 /**
  * Lokalität, an der ein Ereignis zu einem bestimmten Zeitpunkt stattfindet.
