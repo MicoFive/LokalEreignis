@@ -1,27 +1,46 @@
 package com.laplaz.kern.modell;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-
+@Entity
+@Table(name = "EREIGNIS")
 public class Ereignis {
-	
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+
 	String bezeichnung;
-	Zeitpunkt zeitpunkt;
+
+	@ManyToOne
+	Zeitraum zeitraum;
+
+	@ManyToOne
 	Treffpunkt treffpunkt;
 
-	public Ereignis(String bezeichnung, Zeitpunkt zeitpunkt, Treffpunkt treffpunkt) {
+	public Ereignis(String bezeichnung, Zeitraum zeitraum,
+			Treffpunkt treffpunkt) {
 		this.bezeichnung = bezeichnung;
-		this.zeitpunkt = zeitpunkt;
+		this.zeitraum = zeitraum;
 		this.treffpunkt = treffpunkt;
+	}
+
+	public Long getId() {
+		return id;
 	}
 
 	public String getBezeichnung() {
 		return bezeichnung;
 	}
 
-	public Zeitpunkt getZeitpunkt() {
-		return zeitpunkt;
+	public Zeitraum getZeitraum() {
+		return zeitraum;
 	}
-	
 
 	public Treffpunkt getTreffpunkt() {
 		return treffpunkt;
