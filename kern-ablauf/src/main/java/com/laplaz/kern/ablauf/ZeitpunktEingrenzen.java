@@ -12,13 +12,18 @@ import com.laplaz.kern.modell.Zeitraum;
 @Service
 public class ZeitpunktEingrenzen {
 
-	public Zeitraum pruefen(String eingabe) throws ParseException {
+	public Zeitraum pruefen(String eingabe) {
 		// "Fr. 28.12.2012 20:30 Uhr"
-		String pattern = "EE. dd.MM.yyyy HH:mm 'Uhr'";
+		String pattern = "dd.MM.yyyy";
 		Locale locale = Locale.GERMANY;
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern, locale);
-		Date datum = simpleDateFormat.parse(eingabe);
-		Zeitraum zeitpunkt = new Zeitraum(datum);
+		Date datum = null;
+		try {
+			datum = simpleDateFormat.parse(eingabe);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		Zeitraum zeitpunkt = new Zeitraum(eingabe, datum);
 		return zeitpunkt;
 	}
 

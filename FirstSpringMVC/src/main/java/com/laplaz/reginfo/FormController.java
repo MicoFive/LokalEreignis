@@ -25,12 +25,13 @@ import com.laplaz.kern.modell.Zeitraum;
 @RequestMapping("/")
 @SessionAttributes("formBean")
 public class FormController {
-	
-	private static final Logger logger = LoggerFactory.getLogger(FormController.class);
-	
+
+	private static final Logger logger = LoggerFactory
+			.getLogger(FormController.class);
+
 	@Autowired
 	private ZeitpunktEingrenzen zeitpunktEingrenzen;
-	
+
 	@Autowired
 	private EreignisSpeichern ereignisSpeichern;
 
@@ -42,45 +43,43 @@ public class FormController {
 	}
 
 	// Invoked initially to create the "form" attribute
-	// Once created the "form" attribute comes from the HTTP session (see @SessionAttributes)
+	// Once created the "form" attribute comes from the HTTP session (see
+	// @SessionAttributes)
 
 	@ModelAttribute("formBean")
 	public FormBean createFormBean() {
 		return new FormBean();
 	}
-	
-	@RequestMapping(method=RequestMethod.GET)
+
+	@RequestMapping(method = RequestMethod.GET)
 	public String form() {
 		return "form";
 	}
 
-	@RequestMapping(method=RequestMethod.POST)
-	public String processSubmit(@Valid FormBean formBean, BindingResult result, 
-								@ModelAttribute("ajaxRequest") boolean ajaxRequest, 
-								Model model, RedirectAttributes redirectAttrs) {
+	@RequestMapping(method = RequestMethod.POST)
+	public String processSubmit(@Valid FormBean formBean, BindingResult result,
+			@ModelAttribute("ajaxRequest") boolean ajaxRequest, Model model,
+			RedirectAttributes redirectAttrs) throws Exception {
 		if (result.hasErrors()) {
 			return "form";
 		}
-		
+
 		logger.info("Ereignis angelegt: " + formBean);
-		
-		try {
-			String bezeichnung = formBean.getBezeichnung();
-			String zeitpunkt = formBean.getZeitpunkt();
-			String treffpunktEingabe = formBean.getTreffpunkt();
-			Zeitraum zeitraum = zeitpunktEingrenzen.pruefen(zeitpunkt);
-			Treffpunkt treffpunkt = new Treffpunkt(treffpunktEingabe);
-			Ereignis ereignis = new Ereignis(bezeichnung, zeitraum, treffpunkt);
-			zeitraum.getEreignisse().add(ereignis);
-			treffpunkt.getEreignisse().add(ereignis);
-			ereignisSpeichern.speichern(ereignis);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		// Typically you would save to a db and clear the "form" attribute from the session 
-		// via SessionStatus.setCompleted(). For the demo we leave it in the session.
+
+		String bezeichnung = formBean.getBezeichnung();
+		String zeitpunkt = formBean.getZeitpunkt();
+		String treffpunktEingabe = formBean.getTreffpunkt();
+		Zeitraum zeitraum = zeitpunktEingrenzen.pruefen(zeitpunkt);
+		Treffpunkt treffpunkt = new Treffpunkt(treffpunktEingabe);
+		Ereignis ereignis = new Ereignis(bezeichnung, zeitraum, treffpunkt);
+		zeitraum.getEreignisse().add(ereignis);
+		treffpunkt.getEreignisse().add(ereignis);
+		ereignisSpeichern.speichern(ereignis);
+
+		// Typically you would save to a db and clear the "form" attribute from
+		// the session
+		// via SessionStatus.setCompleted(). For the demo we leave it in the
+		// session.
 		String message = "Form submitted successfully.  Bound " + formBean;
 		// Success response handling
 		if (ajaxRequest) {
@@ -88,11 +87,13 @@ public class FormController {
 			model.addAttribute("message", message);
 			return null;
 		} else {
-			// store a success message for rendering on the next request after redirect
-			// redirect back to the form to render the success message along with newly bound values
+			// store a success message for rendering on the next request after
+			// redirect
+			// redirect back to the form to render the success message along
+			// with newly bound values
 			redirectAttrs.addFlashAttribute("message", message);
-			return "redirect:/";			
+			return "redirect:/";
 		}
 	}
-	
+
 }

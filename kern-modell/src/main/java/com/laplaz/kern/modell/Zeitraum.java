@@ -21,13 +21,16 @@ public class Zeitraum {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
+	String bezeichnung;
+	
+	Date datum;
+	
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name="ZEITRAUM_ID")
 	private Collection<Ereignis> ereignisse = new LinkedHashSet<Ereignis>();
 	
-	Date datum;
-	
-	public Zeitraum(Date datum) {
+	public Zeitraum(String bezeichnung, Date datum) {
+		this.bezeichnung = bezeichnung;
 		this.datum = datum; 
 	}
 
@@ -36,6 +39,14 @@ public class Zeitraum {
 	 */
 	public Long getId() {
 		return id;
+	}
+
+	public String getBezeichnung() {
+		return bezeichnung;
+	}
+
+	public Date getDatum() {
+		return datum;
 	}
 	
 	/**
@@ -52,8 +63,5 @@ public class Zeitraum {
 		this.ereignisse = ereignisse;
 	}
 
-	public Date getDatum() {
-		return datum;
-	}
 
 }

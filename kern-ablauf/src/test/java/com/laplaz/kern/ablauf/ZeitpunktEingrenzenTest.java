@@ -13,7 +13,7 @@ public class ZeitpunktEingrenzenTest {
 	
 	@Test
 	public void datumParsenTest() throws ParseException {
-		String eingabe = "Fr. 28.12.2012 20:30 Uhr";
+		String eingabe = "28.12.2012";
 		ZeitpunktEingrenzen zeitpunktEingrenzen = new ZeitpunktEingrenzen();
 		Zeitraum zeitpunkt = zeitpunktEingrenzen.pruefen(eingabe);
 		assertNotNull("Zeitpunkt enthält kein Datum", zeitpunkt.getDatum());

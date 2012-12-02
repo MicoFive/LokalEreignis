@@ -28,7 +28,7 @@ public class EreignisSpeichernTests {
 		String bezeichnung = "Tanz in den Mai";
 		String treffpunktBezeichnung = "treffpunktBezeichnung";
 		Date beginn = new Date();
-		Zeitraum zeitpunkt = new Zeitraum(beginn);
+		Zeitraum zeitpunkt = new Zeitraum(beginn.toString(), beginn);
 		Treffpunkt treffpunkt = new Treffpunkt(treffpunktBezeichnung);
 		Session session = sessionFactory.getCurrentSession();
 		Ereignis ereignis = new Ereignis(bezeichnung, zeitpunkt, treffpunkt);
