@@ -11,8 +11,9 @@ public class EreignisTest {
 	@Test
 	public void test() {
 		String bezeichnung = "Dagmars Geburtstag";
+		String treffpunktBezeichnung = "treffpunktBezeichnung";
 		Zeitraum zeitraum = new Zeitraum(new Date());
-		Treffpunkt treffpunkt = new Treffpunkt();
+		Treffpunkt treffpunkt = new Treffpunkt(treffpunktBezeichnung);
 		Ereignis ereignis = new Ereignis(bezeichnung, zeitraum, treffpunkt);
 		assertEquals("Falsche Bezeichnung", bezeichnung, ereignis.getBezeichnung());
 		assertEquals("Falscher Zeitraum", zeitraum, ereignis.getZeitraum());

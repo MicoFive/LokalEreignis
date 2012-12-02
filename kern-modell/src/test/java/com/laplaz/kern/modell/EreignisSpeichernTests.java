@@ -26,9 +26,10 @@ public class EreignisSpeichernTests {
 	@Rollback(false)
 	public void testSaveOrderWithItems() throws Exception {
 		String bezeichnung = "Tanz in den Mai";
+		String treffpunktBezeichnung = "treffpunktBezeichnung";
 		Date beginn = new Date();
 		Zeitraum zeitpunkt = new Zeitraum(beginn);
-		Treffpunkt treffpunkt = new Treffpunkt();
+		Treffpunkt treffpunkt = new Treffpunkt(treffpunktBezeichnung);
 		Session session = sessionFactory.getCurrentSession();
 		Ereignis ereignis = new Ereignis(bezeichnung, zeitpunkt, treffpunkt);
 		zeitpunkt.getEreignisse().add(ereignis);

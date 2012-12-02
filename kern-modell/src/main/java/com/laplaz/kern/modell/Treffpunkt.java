@@ -26,15 +26,25 @@ public class Treffpunkt {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
+	String bezeichnung;
+	
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name="TREFFPUNKT_ID")
 	private Collection<Ereignis> ereignisse = new LinkedHashSet<Ereignis>();
-
+	
+	public Treffpunkt(String bezeichnung) {
+		this.bezeichnung = bezeichnung;
+	}
+	
 	/**
 	 * @return the id
 	 */
 	public Long getId() {
 		return id;
+	}
+
+	public String getBezeichnung() {
+		return bezeichnung;
 	}
 	
 	/**

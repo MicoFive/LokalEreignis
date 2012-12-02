@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,12 +15,24 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.laplaz.kern.ablauf.EreignisSpeichern;
+import com.laplaz.kern.ablauf.ZeitpunktEingrenzen;
+import com.laplaz.kern.modell.Ereignis;
+import com.laplaz.kern.modell.Treffpunkt;
+import com.laplaz.kern.modell.Zeitraum;
+
 @Controller
 @RequestMapping("/")
 @SessionAttributes("formBean")
 public class FormController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(FormController.class);
+	
+	@Autowired
+	private ZeitpunktEingrenzen zeitpunktEingrenzen;
+	
+	@Autowired
+	private EreignisSpeichern ereignisSpeichern;
 
 	// Invoked on every request
 
@@ -50,6 +63,21 @@ public class FormController {
 		}
 		
 		logger.info("Ereignis angelegt: " + formBean);
+		
+		try {
+			String bezeichnung = formBean.getBezeichnung();
+			String zeitpunkt = formBean.getZeitpunkt();
+			String treffpunktEingabe = formBean.getTreffpunkt();
+			Zeitraum zeitraum = zeitpunktEingrenzen.pruefen(zeitpunkt);
+			Treffpunkt treffpunkt = new Treffpunkt(treffpunktEingabe);
+			Ereignis ereignis = new Ereignis(bezeichnung, zeitraum, treffpunkt);
+			zeitraum.getEreignisse().add(ereignis);
+			treffpunkt.getEreignisse().add(ereignis);
+			ereignisSpeichern.speichern(ereignis);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		// Typically you would save to a db and clear the "form" attribute from the session 
 		// via SessionStatus.setCompleted(). For the demo we leave it in the session.
