@@ -1,6 +1,6 @@
 package com.laplaz.kern.modell;
 
-import java.util.Date;
+import java.util.List;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
@@ -23,6 +23,20 @@ public class EreignisRepository {
 		session.save(treffpunkt);
 		session.save(ereignis);
 		session.flush();
+	}
+
+	/**
+	 * Unsortiert alle Ereignisse mit Zeitraum und Treffpunkt laden
+	 * 
+	 * @return Liste aller Ereignisse
+	 */
+	@Transactional
+	public List<Ereignis> suchen() {
+		Session session = sessionFactory.getCurrentSession();
+		@SuppressWarnings("unchecked")
+		List<Ereignis> ereignisse = session.createCriteria(Ereignis.class)
+				.list();
+		return ereignisse;
 	}
 
 }

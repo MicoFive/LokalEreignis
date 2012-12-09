@@ -32,9 +32,16 @@ public class Treffpunkt {
 	@JoinColumn(name="TREFFPUNKT_ID")
 	private Collection<Ereignis> ereignisse = new LinkedHashSet<Ereignis>();
 	
+	
 	public Treffpunkt(String bezeichnung) {
 		this.bezeichnung = bezeichnung;
 	}
+
+	/*
+	 * Nur für Hibernate
+	 */
+	@SuppressWarnings("unused")
+	private Treffpunkt(){}
 	
 	/**
 	 * @return the id

@@ -29,6 +29,12 @@ public class Ereignis {
 		this.zeitraum = zeitraum;
 		this.treffpunkt = treffpunkt;
 	}
+	
+	/*
+	 * Nur für Hibernate
+	 */
+	@SuppressWarnings("unused")
+	private Ereignis(){}
 
 	public Long getId() {
 		return id;

@@ -33,6 +33,12 @@ public class Zeitraum {
 		this.bezeichnung = bezeichnung;
 		this.datum = datum; 
 	}
+	
+	/*
+	 * Nur für Hibernate
+	 */
+	@SuppressWarnings("unused")
+	private Zeitraum(){}
 
 	/**
 	 * @return the id

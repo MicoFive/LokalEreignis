@@ -60,6 +60,18 @@
 			});
 		</script>
 	</div>
+	<div id="ereignisse">
+
+	<c:forEach var="ereignis" items="${ereignisse}">
+	<div id="ereignis">
+       Bezeichnung: ${ereignis.bezeichnung}<br>
+       Zeitpunkt: ${ereignis.zeitraum.bezeichnung}<br>
+       Treffpunkt: ${ereignis.treffpunkt.bezeichnung}
+       </div>
+       <p/>
+    </c:forEach>
+
+	</div>
 <c:if test="${!ajaxRequest}">
 </body>
 </html>

@@ -1,5 +1,7 @@
 package com.laplaz.reginfo;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -13,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.laplaz.kern.ablauf.EreignisSpeichern;
+import com.laplaz.kern.ablauf.EreignisseSuchen;
 import com.laplaz.kern.ablauf.ZeitpunktEingrenzen;
 import com.laplaz.kern.modell.Ereignis;
 import com.laplaz.kern.modell.Treffpunkt;
@@ -35,6 +39,9 @@ public class FormController {
 	@Autowired
 	private EreignisSpeichern ereignisSpeichern;
 
+	@Autowired
+	private EreignisseSuchen ereignisseSuchen;
+
 	// Invoked on every request
 
 	@ModelAttribute
@@ -52,8 +59,15 @@ public class FormController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String form() {
-		return "form";
+	public ModelAndView form() {
+		String viewName = "form";
+		ModelAndView mav = new ModelAndView();
+		
+		List<Ereignis> ereignisse = ereignisseSuchen.beginnen();
+		mav.addObject(ereignisse);
+		
+		mav.setViewName(viewName);
+		return mav;
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
