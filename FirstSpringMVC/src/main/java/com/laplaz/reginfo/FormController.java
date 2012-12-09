@@ -64,7 +64,7 @@ public class FormController {
 		ModelAndView mav = new ModelAndView();
 		
 		List<Ereignis> ereignisse = ereignisseSuchen.beginnen();
-		mav.addObject(ereignisse);
+		mav.addObject("ereignisse", ereignisse);
 		
 		mav.setViewName(viewName);
 		return mav;
