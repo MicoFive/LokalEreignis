@@ -28,14 +28,22 @@ public class EreignisSpeichernTests {
 		String bezeichnung = "Tanz in den Mai";
 		String treffpunktBezeichnung = "treffpunktBezeichnung";
 		Date beginn = new Date();
-		Zeitraum zeitpunkt = new Zeitraum(beginn.toString(), beginn);
-		Treffpunkt treffpunkt = new Treffpunkt(treffpunktBezeichnung);
+		
 		Session session = sessionFactory.getCurrentSession();
+		
+		Zeitpunkt zeitpunkt = new Zeitpunkt(beginn.toString(), beginn);
+		
+		session.save(zeitpunkt);
+		
+		Treffpunkt treffpunkt = new Treffpunkt(treffpunktBezeichnung);
+		
+		session.save(treffpunkt);
+		
 		Ereignis ereignis = new Ereignis(bezeichnung, zeitpunkt, treffpunkt);
 		zeitpunkt.getEreignisse().add(ereignis);
 		treffpunkt.getEreignisse().add(ereignis);
-		session.save(zeitpunkt);
-		session.save(treffpunkt);
+
+		
 		session.save(ereignis);
 		session.flush();
 		assertNotNull(ereignis.getId());

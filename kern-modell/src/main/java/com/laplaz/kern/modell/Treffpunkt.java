@@ -3,12 +3,10 @@ package com.laplaz.kern.modell;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -28,8 +26,7 @@ public class Treffpunkt {
 	
 	String bezeichnung;
 	
-	@OneToMany(cascade=CascadeType.ALL)
-	@JoinColumn(name="TREFFPUNKT_ID")
+	@OneToMany(mappedBy="treffpunkt")
 	private Collection<Ereignis> ereignisse = new LinkedHashSet<Ereignis>();
 	
 	

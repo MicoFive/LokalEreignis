@@ -24,10 +24,9 @@ public class HibernateConfiguration {
 		props.put("hibernate.format_sql", "true");
 
 		AnnotationSessionFactoryBean bean = new AnnotationSessionFactoryBean();
-		bean.setAnnotatedClasses(new Class[]{Ereignis.class, Zeitraum.class, Treffpunkt.class});		
+		bean.setAnnotatedClasses(new Class[]{Ereignis.class, Zeitpunkt.class, Treffpunkt.class});		
 		bean.setHibernateProperties(props);
 		bean.setDataSource(this.dataSource);
-		bean.setSchemaUpdate(true);
 		return bean;
 	}
 

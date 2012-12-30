@@ -23,7 +23,7 @@ import com.laplaz.kern.ablauf.EreignisseSuchen;
 import com.laplaz.kern.ablauf.ZeitpunktEingrenzen;
 import com.laplaz.kern.modell.Ereignis;
 import com.laplaz.kern.modell.Treffpunkt;
-import com.laplaz.kern.modell.Zeitraum;
+import com.laplaz.kern.modell.Zeitpunkt;
 
 @Controller
 @RequestMapping("/")
@@ -81,12 +81,12 @@ public class FormController {
 		logger.info("Ereignis angelegt: " + formBean);
 
 		String bezeichnung = formBean.getBezeichnung();
-		String zeitpunkt = formBean.getZeitpunkt();
+		String zeitpunktString = formBean.getZeitpunkt();
 		String treffpunktEingabe = formBean.getTreffpunkt();
-		Zeitraum zeitraum = zeitpunktEingrenzen.pruefen(zeitpunkt);
+		Zeitpunkt zeitpunkt = zeitpunktEingrenzen.pruefen(zeitpunktString);
 		Treffpunkt treffpunkt = new Treffpunkt(treffpunktEingabe);
-		Ereignis ereignis = new Ereignis(bezeichnung, zeitraum, treffpunkt);
-		zeitraum.getEreignisse().add(ereignis);
+		Ereignis ereignis = new Ereignis(bezeichnung, zeitpunkt, treffpunkt);
+		zeitpunkt.getEreignisse().add(ereignis);
 		treffpunkt.getEreignisse().add(ereignis);
 		ereignisSpeichern.speichern(ereignis);
 

@@ -17,8 +17,8 @@ public class EreignisRepository {
 	@Transactional
 	public void speichern(Ereignis ereignis) throws Exception {
 		Session session = sessionFactory.getCurrentSession();
-		Zeitraum zeitraum = ereignis.getZeitraum();
-		session.save(zeitraum);
+		Zeitpunkt zeitpunkt = ereignis.getZeitpunkt();
+		session.save(zeitpunkt);
 		Treffpunkt treffpunkt = ereignis.getTreffpunkt();
 		session.save(treffpunkt);
 		session.save(ereignis);
@@ -26,7 +26,7 @@ public class EreignisRepository {
 	}
 
 	/**
-	 * Unsortiert alle Ereignisse mit Zeitraum und Treffpunkt laden
+	 * Unsortiert alle Ereignisse mit Zeitpunkt und Treffpunkt laden
 	 * 
 	 * @return Liste aller Ereignisse
 	 */

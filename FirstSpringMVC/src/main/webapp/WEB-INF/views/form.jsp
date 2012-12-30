@@ -65,7 +65,7 @@
 	<c:forEach var="ereignis" items="${ereignisse}">
 	<div id="ereignis">
        Bezeichnung: ${ereignis.bezeichnung}<br>
-       Zeitpunkt: ${ereignis.zeitraum.bezeichnung}<br>
+       Zeitpunkt: ${ereignis.zeitpunkt.bezeichnung}<br>
        Treffpunkt: ${ereignis.treffpunkt.bezeichnung}
        </div>
        <p/>

@@ -7,12 +7,12 @@ import java.util.Locale;
 
 import org.springframework.stereotype.Service;
 
-import com.laplaz.kern.modell.Zeitraum;
+import com.laplaz.kern.modell.Zeitpunkt;
 
 @Service
 public class ZeitpunktEingrenzen {
 
-	public Zeitraum pruefen(String eingabe) {
+	public Zeitpunkt pruefen(String eingabe) {
 		// "Fr. 28.12.2012 20:30 Uhr"
 		String pattern = "dd.MM.yyyy";
 		Locale locale = Locale.GERMANY;
@@ -23,7 +23,7 @@ public class ZeitpunktEingrenzen {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		Zeitraum zeitpunkt = new Zeitraum(eingabe, datum);
+		Zeitpunkt zeitpunkt = new Zeitpunkt(eingabe, datum);
 		return zeitpunkt;
 	}
 

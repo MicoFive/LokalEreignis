@@ -14,8 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "ZEITRAUM")
-public class Zeitraum {
+@Table(name = "ZEITPUNKT")
+public class Zeitpunkt {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,11 +25,10 @@ public class Zeitraum {
 	
 	Date datum;
 	
-	@OneToMany(cascade=CascadeType.ALL)
-	@JoinColumn(name="ZEITRAUM_ID")
+	@OneToMany(mappedBy="zeitpunkt")
 	private Collection<Ereignis> ereignisse = new LinkedHashSet<Ereignis>();
 	
-	public Zeitraum(String bezeichnung, Date datum) {
+	public Zeitpunkt(String bezeichnung, Date datum) {
 		this.bezeichnung = bezeichnung;
 		this.datum = datum; 
 	}
@@ -38,7 +37,7 @@ public class Zeitraum {
 	 * Nur für Hibernate
 	 */
 	@SuppressWarnings("unused")
-	private Zeitraum(){}
+	private Zeitpunkt(){}
 
 	/**
 	 * @return the id
@@ -65,7 +64,7 @@ public class Zeitraum {
 	/**
 	 * @param ereignisse die ereignisse an diesem treffpunkt
 	 */
-	public void setItems(Collection<Ereignis> ereignisse) {
+	public void setEreignisse(Collection<Ereignis> ereignisse) {
 		this.ereignisse = ereignisse;
 	}
 

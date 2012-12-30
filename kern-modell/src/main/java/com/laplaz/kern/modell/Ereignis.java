@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -18,15 +19,17 @@ public class Ereignis {
 	String bezeichnung;
 
 	@ManyToOne
-	Zeitraum zeitraum;
+	@JoinColumn(name="ZEITPUNKT_ID", nullable=false)
+	Zeitpunkt zeitpunkt;
 
 	@ManyToOne
+	@JoinColumn(name="TREFFPUNKT_ID", nullable=false)
 	Treffpunkt treffpunkt;
 
-	public Ereignis(String bezeichnung, Zeitraum zeitraum,
+	public Ereignis(String bezeichnung, Zeitpunkt zeitpunkt,
 			Treffpunkt treffpunkt) {
 		this.bezeichnung = bezeichnung;
-		this.zeitraum = zeitraum;
+		this.zeitpunkt = zeitpunkt;
 		this.treffpunkt = treffpunkt;
 	}
 	
@@ -44,8 +47,8 @@ public class Ereignis {
 		return bezeichnung;
 	}
 
-	public Zeitraum getZeitraum() {
-		return zeitraum;
+	public Zeitpunkt getZeitpunkt() {
+		return zeitpunkt;
 	}
 
 	public Treffpunkt getTreffpunkt() {
