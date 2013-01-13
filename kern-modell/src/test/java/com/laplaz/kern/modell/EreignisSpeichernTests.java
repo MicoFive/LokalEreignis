@@ -23,27 +23,23 @@ public class EreignisSpeichernTests {
 
 	@Test
 	@Transactional
-	@Rollback(false)
+	@Rollback(true)
 	public void testSaveOrderWithItems() throws Exception {
-		String bezeichnung = "Tanz in den Mai";
-		String treffpunktBezeichnung = "treffpunktBezeichnung";
+		String bezeichnung = "Testereignis";
+		String treffpunktBezeichnung = "bezeichnungTreffpunkt";
 		Date beginn = new Date();
 		
 		Session session = sessionFactory.getCurrentSession();
-		
 		Zeitpunkt zeitpunkt = new Zeitpunkt(beginn.toString(), beginn);
-		
-		session.save(zeitpunkt);
-		
 		Treffpunkt treffpunkt = new Treffpunkt(treffpunktBezeichnung);
-		
-		session.save(treffpunkt);
 		
 		Ereignis ereignis = new Ereignis(bezeichnung, zeitpunkt, treffpunkt);
 		zeitpunkt.getEreignisse().add(ereignis);
 		treffpunkt.getEreignisse().add(ereignis);
 
 		
+		session.save(zeitpunkt);
+		session.save(treffpunkt);
 		session.save(ereignis);
 		session.flush();
 		assertNotNull(ereignis.getId());
