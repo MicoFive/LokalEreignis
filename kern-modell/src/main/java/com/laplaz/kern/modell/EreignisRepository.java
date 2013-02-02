@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +15,6 @@ public class EreignisRepository {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	@Transactional
 	public void speichern(Ereignis ereignis) throws Exception {
 		Session session = sessionFactory.getCurrentSession();
 		Zeitpunkt zeitpunkt = ereignis.getZeitpunkt();
@@ -30,13 +30,21 @@ public class EreignisRepository {
 	 * 
 	 * @return Liste aller Ereignisse
 	 */
-	@Transactional
-	public List<Ereignis> suchen() {
+	public List<Ereignis> alleEreignisseSuchen() {
 		Session session = sessionFactory.getCurrentSession();
 		@SuppressWarnings("unchecked")
-		List<Ereignis> ereignisse = session.createCriteria(Ereignis.class)
-				.list();
+		List<Ereignis> ereignisse = (List<Ereignis>) session.createCriteria(
+				Ereignis.class).list();
 		return ereignisse;
+	}
+	
+	public Treffpunkt treffpunktSuchen(String bezeichnung) {
+		Session session = sessionFactory.getCurrentSession();
+		Treffpunkt treffpunkt = (Treffpunkt) session
+				.createCriteria(Treffpunkt.class)
+				.add(Restrictions.eq("bezeichnung", bezeichnung))
+				.uniqueResult();
+		return treffpunkt;
 	}
 
 }

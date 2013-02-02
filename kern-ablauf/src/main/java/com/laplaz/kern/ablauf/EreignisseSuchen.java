@@ -29,7 +29,7 @@ public class EreignisseSuchen {
 	 * @return Liste von Ereignissen mit Zeitpunkten und Treffpunkten
 	 */
 	public List<Ereignis> beginnen() {
-		List<Ereignis> ereignisse = ereignisRepository.suchen();
+		List<Ereignis> ereignisse = ereignisRepository.alleEreignisseSuchen();
 		if (null != ereignisse) {
 			logger.debug(ereignisse.size() + " Ereignisse geladen");
 		} else {

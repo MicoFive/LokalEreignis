@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.laplaz.kern.ablauf.EreignisSpeichern;
 import com.laplaz.kern.ablauf.EreignisseSuchen;
+import com.laplaz.kern.ablauf.TreffpunktZuordnen;
 import com.laplaz.kern.ablauf.ZeitpunktEingrenzen;
 import com.laplaz.kern.modell.Ereignis;
 import com.laplaz.kern.modell.Treffpunkt;
@@ -42,6 +44,9 @@ public class FormController {
 	@Autowired
 	private EreignisseSuchen ereignisseSuchen;
 
+	@Autowired
+	private TreffpunktZuordnen treffpunktZuordnen;
+
 	// Invoked on every request
 
 	@ModelAttribute
@@ -59,6 +64,7 @@ public class FormController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
+	@Transactional
 	public ModelAndView form() {
 		String viewName = "form";
 		ModelAndView mav = new ModelAndView();
@@ -71,6 +77,7 @@ public class FormController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
+	@Transactional
 	public String processSubmit(@Valid FormBean formBean, BindingResult result,
 			@ModelAttribute("ajaxRequest") boolean ajaxRequest, Model model,
 			RedirectAttributes redirectAttrs) throws Exception {
@@ -81,13 +88,13 @@ public class FormController {
 		logger.info("Ereignis angelegt: " + formBean);
 
 		String bezeichnung = formBean.getBezeichnung();
-		String zeitpunktString = formBean.getZeitpunkt();
+		String zeitpunktEingabe = formBean.getZeitpunkt();
 		String treffpunktEingabe = formBean.getTreffpunkt();
-		Zeitpunkt zeitpunkt = zeitpunktEingrenzen.pruefen(zeitpunktString);
-		Treffpunkt treffpunkt = new Treffpunkt(treffpunktEingabe);
+
+		Zeitpunkt zeitpunkt = zeitpunktEingrenzen.pruefen(zeitpunktEingabe);
+		Treffpunkt treffpunkt = treffpunktZuordnen.lesen(treffpunktEingabe);
+		
 		Ereignis ereignis = new Ereignis(bezeichnung, zeitpunkt, treffpunkt);
-		zeitpunkt.getEreignisse().add(ereignis);
-		treffpunkt.getEreignisse().add(ereignis);
 		ereignisSpeichern.speichern(ereignis);
 
 		// Typically you would save to a db and clear the "form" attribute from
