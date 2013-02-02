@@ -47,4 +47,13 @@ public class EreignisRepository {
 		return treffpunkt;
 	}
 
+	public Zeitpunkt zeitpunktSuchen(String bezeichnung) {
+		Session session = sessionFactory.getCurrentSession();
+		Zeitpunkt zeitpunkt = (Zeitpunkt) session
+				.createCriteria(Zeitpunkt.class)
+				.add(Restrictions.eq("bezeichnung", bezeichnung))
+				.uniqueResult();
+		return zeitpunkt;
+	}
+
 }

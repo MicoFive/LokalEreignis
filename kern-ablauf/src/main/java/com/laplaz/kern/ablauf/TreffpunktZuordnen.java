@@ -3,6 +3,8 @@ package com.laplaz.kern.ablauf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 import com.laplaz.kern.modell.EreignisRepository;
 import com.laplaz.kern.modell.Treffpunkt;
 
@@ -22,6 +24,10 @@ public class TreffpunktZuordnen implements Ablauf<Treffpunkt> {
 			treffpunkt = new Treffpunkt(eingabe);
 		}
 		return treffpunkt;
+	}
+
+	public Treffpunkt pruefen(String eingabe) {
+		throw new NotImplementedException();
 	}
 
 }

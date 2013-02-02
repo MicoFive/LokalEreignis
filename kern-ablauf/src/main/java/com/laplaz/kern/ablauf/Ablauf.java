@@ -9,4 +9,6 @@ public interface  Ablauf<T> {
 
 	void setEreignisRepository(EreignisRepository ereignisRepository);
 
+	T pruefen(String eingabe);
+
 }
